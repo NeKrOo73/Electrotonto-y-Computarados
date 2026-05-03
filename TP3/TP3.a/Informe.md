@@ -280,14 +280,18 @@ Dando como resultado:
 
 ## 6. Conclusiones
 
-En este trabajo se logró:
+A lo largo de este trabajo pudimos ver que UEFI no es solo un reemplazo moderno del BIOS, sino que en realidad funciona como un entorno completo que se ejecuta antes del sistema operativo. Tiene sus propias reglas, sus servicios y una forma distinta de interactuar con el hardware.
 
-* Comprender el modelo de ejecución de UEFI
-* Analizar la abstracción del hardware mediante protocolos
-* Desarrollar aplicaciones nativas en entorno firmware
-* Entender el formato PE/COFF
-* Identificar riesgos de seguridad en fases tempranas del sistema
+Algo que nos llamó bastante la atención fue el cambio de paradigma respecto al BIOS. En lugar de trabajar directamente con direcciones físicas o hardware específico, UEFI usa un modelo basado en protocolos y handles, lo que hace que el sistema sea mucho más flexible y portable. Al mismo tiempo, esto también implica que las posibles vulnerabilidades ya no están tan ligadas al hardware en sí, sino a cómo se implementan estos mecanismos más abstractos.
 
-Además, se evidenció cómo el firmware constituye un punto crítico en la cadena de confianza del sistema, siendo un objetivo relevante para ataques avanzados como bootkits.
+Cuando desarrollamos la aplicación UEFI, vimos en la práctica que estamos trabajando en un entorno totalmente distinto al de un sistema operativo tradicional. No hay printf, no hay librerías estándar como las conocemos, y toda interacción pasa por estructuras como la EFI_SYSTEM_TABLE. Esto obliga a entender mejor qué está pasando “por abajo” y cómo se manejan realmente los recursos.
+
+Un aspecto relevante observado es que, a diferencia del desarrollo tradicional, en UEFI los errores pueden tener consecuencias críticas, ya que se ejecuta en etapas muy tempranas del sistema. Esto refuerza la necesidad de entender profundamente el entorno antes de desarrollar o analizar código a este nivel.
+
+Desde el punto de vista de seguridad, quedó bastante claro que UEFI es un punto crítico. Al estar en una etapa tan temprana del arranque, cualquier código que se ejecute ahí tiene un nivel de privilegio muy alto. En particular, las regiones de memoria asociadas a Runtime Services y las variables en NVRAM pueden ser usadas para mantener persistencia, lo que explica por qué son objetivos típicos en ataques como bootkits.
+
+El uso de herramientas como Ghidra también fue interesante porque nos permitió ver cómo el código se traduce a nivel más bajo. Por ejemplo, el caso del 0xCC que aparece como -52 muestra cómo una misma información puede interpretarse de distintas maneras según el contexto, algo que es clave cuando se hace análisis de binarios o ingeniería inversa.
+
+Por último, al ejecutar la aplicación en hardware real, vimos en la práctica el rol de mecanismos como Secure Boot. Entendimos que no es solo una configuración más, sino una parte importante del modelo de seguridad, ya que evita la ejecución de código no firmado en etapas críticas del sistema.
 
 ---
