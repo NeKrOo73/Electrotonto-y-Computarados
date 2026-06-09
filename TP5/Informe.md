@@ -339,7 +339,7 @@ El siguiente video muestra la prueba completa con la Raspberry Pi, los pulsadore
 
 <video controls src="Multimedia/funcionamiento.mp4" width="800"></video>
 
-Si el visor Markdown utilizado no reproduce videos embebidos, el archivo puede abrirse directamente desde:
+Si el visor Markdown utilizado no reproduce videos embebidos, puede abrir el archivo directamente desde:
 
 ```text
 TP5/Multimedia/funcionamiento.mp4
